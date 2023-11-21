@@ -3,10 +3,10 @@
 
 Final Project files for STA 108
 
-- "Individual Markdowns" contains raw data analysis code made by Gabe and Ellie
-- "Plots" Contains .pngs of plots generated during data analysis
-- "Reference Sheets" Contains useful .pdf files detailing how to use ggplot2, RMarkdown files, and Latex
-- "countries.csv" is the main data set
-- "STA108_TermProject_submission.rmd" is the RMarkdown file used to create the project submission pdf
-- "STA108_TermProject_submission.pdf" is the project submission pdf
-- "term project.pdf" contains details about the term project 
+- _Individual Markdowns_ contains raw data analysis code made by Gabe and Ellie
+- _Plots Contains_ .pngs of plots generated during data analysis
+- _Reference Sheets_ Contains useful .pdf files detailing how to use ggplot2, RMarkdown files, and Latex
+- _countries.csv_ is the main data set
+- _STA108_TermProject_submission.rmd_ is the RMarkdown file used to create the project submission pdf
+- _STA108_TermProject_submission.pdf_ is the project submission pdf
+- _term project.pdf_ contains details about the term project 
