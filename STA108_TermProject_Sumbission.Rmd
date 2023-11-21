@@ -1,0 +1,29 @@
+---
+title: "STA108 Term Project"
+author: "Gabriel Jones & Ellie C."
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+Introduction to the data set and our question of interest
+
+## Results
+
+Statement of model we found to be most ideal and which parameters were involved.
+
+## Methods
+
+Our approach towards achieving our ideal model
+
+## Summary
+
+## Appendix
+
+Long chunk of R code
+
