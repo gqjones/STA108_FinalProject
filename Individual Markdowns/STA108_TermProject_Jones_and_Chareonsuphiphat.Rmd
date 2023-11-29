@@ -54,15 +54,18 @@ x.dat <- countries$land_area #<change>
 
 y.lab <- "Life Expectancy"
 title <- paste(y.lab, "~", x.lab)
+
   
 # Create Linear Model
-landarea_lm <- lm(life_expectancy ~ x.dat, data=countries, ) #<change>
+landarea_lm <- lm(life_expectancy ~ x.dat, data=countries) #<change>
 landarea_lm_summary <- summary(landarea_lm) #<change>
 row.names(landarea_lm_summary$coefficients) <- c("(Intercept)", x.lab) #<change>
+
 
 # Display Values
 kable(landarea_lm_summary$coefficients, #<change>
       caption=title)
+
 
 # Scatterplot
 landarea_scatter <- countries%>% #<change>
@@ -74,6 +77,7 @@ landarea_scatter <- countries%>% #<change>
        x=x.lab,
        y=y.lab)
 ggsave(filename=paste(x.lab, "Scatterplot.png"), device = "png", path=paste0("../Plots/", x.lab))
+
 
 # Residual Plot
 landarea_resid <- countries%>%  #<change>
@@ -87,6 +91,7 @@ landarea_resid <- countries%>%  #<change>
        y="Residuals")
 ggsave(filename=paste(x.lab, "Residual Plot.png"), device = "png", path=paste0("../Plots/", x.lab))
 
+
 # Residual QQ Plot
 landarea_ResidQQ <- landarea_lm%>% #<change>
   ggplot(aes(sample=residuals(landarea_lm)))+ #<change>
@@ -97,6 +102,7 @@ landarea_ResidQQ <- landarea_lm%>% #<change>
        y="Sample Quantiles")
 ggsave(filename=paste("Residual QQ Plot.png"), device = "png", path=paste0("../Plots/", x.lab))
 
+
 # Predictor QQ Plot
 landarea_QQ <- landarea_lm%>% #<change>
   ggplot(aes(sample=x.dat))+
@@ -106,6 +112,7 @@ landarea_QQ <- landarea_lm%>% #<change>
        x="Theoretical Quantiles",
        y="Sample Quantiles")
 ggsave(filename=paste(x.lab, "QQ Plot.png"), device = "png", path=paste0("../Plots/", x.lab))
+
 
 ggarrange(landarea_scatter, landarea_resid) #<change>
 ggarrange(landarea_QQ, landarea_ResidQQ) #<change>
