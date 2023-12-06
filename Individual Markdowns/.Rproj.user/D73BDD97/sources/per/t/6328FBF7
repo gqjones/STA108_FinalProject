@@ -1,0 +1,26 @@
+{
+    "id": "6328FBF7",
+    "path": "C:/GitHub Repositories/STA108/Homework/STA108_HW3.Rmd",
+    "project_path": null,
+    "type": "r_markdown",
+    "hash": "1383856051",
+    "contents": "",
+    "dirty": false,
+    "created": 1701827007830.0,
+    "source_on_save": false,
+    "relative_order": 4,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "396,45",
+        "scrollLine": "381"
+    },
+    "folds": "0|3|5|0|\n7|27|9|0|\n11|16|21|0|\n23|13|70|0|\n25|34|35|0|\n31|32|33|4|\n38|51|49|0|\n46|50|48|4|\n53|48|69|0|\n78|29|86|0|\n90|13|105|0|\n107|29|112|0|\n116|29|126|0|\n130|29|163|0|\n167|29|177|0|\n181|29|193|0|\n199|29|205|0|\n209|29|223|0|\n227|29|235|0|\n259|29|266|0|\n295|29|309|0|\n431|6|447|0|\n451|6|490|0|\n494|12|795|0|\n",
+    "lastKnownWriteTime": 1699929016,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1701827330449,
+    "read_only": false,
+    "read_only_alternatives": []
+}

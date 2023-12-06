@@ -1,0 +1,32 @@
+{
+    "id": "7D5D1D1E",
+    "path": "C:/GitHub Repositories/STA108_FinalProject/Individual Markdowns/STA108_TermProject_Edits.Rmd",
+    "project_path": "STA108_TermProject_Edits.Rmd",
+    "type": "r_markdown",
+    "hash": "804507487",
+    "contents": "",
+    "dirty": false,
+    "created": 1701824169578.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "37,52",
+        "scrollLine": "32",
+        "last_setup_crc32": "4375aa17c4e2d899",
+        "rmdVisualMode": "false",
+        "rmdVisualCollapsedChunks": "1,107,169,348,543,2649,4769,6786,8780,10836,12836,14898,17002,19141",
+        "rmdVisualModeLocation": "512:0",
+        "rmdVisualWrapConfigured": "true",
+        "docOutlineVisible": "1"
+    },
+    "folds": "0|3|5|0|\n7|27|9|0|\n11|6|23|0|\n25|6|29|0|\n47|6|116|0|\n120|6|189|0|\n193|6|262|0|\n266|6|335|0|\n339|6|408|0|\n412|6|481|0|\n485|6|554|0|\n558|6|627|0|\n631|6|700|0|\n704|6|773|0|\n",
+    "lastKnownWriteTime": 1701828411,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1701828411521,
+    "read_only": false,
+    "read_only_alternatives": []
+}

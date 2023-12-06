@@ -1,0 +1,3 @@
+"0","# Load Data"
+"0","countries <- read.csv(""../countries.csv"")"
+"0","countries <- janitor::clean_names(countries)"
