@@ -3,7 +3,7 @@
 
 Final Project files for STA 108
 
-- _**Individual Markdowns**_ contains raw data analysis code made by Gabe and Ellie
+- _**Individual Markdowns**_ contains raw data analysis code
 - _**Plots Contains**_ .pngs of plots generated during data analysis
 - _**Reference Sheets**_ Contains useful .pdf files detailing how to use ggplot2, RMarkdown files, and Latex
 - _**countries.csv**_ is the main data set
