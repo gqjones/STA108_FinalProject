@@ -1,0 +1,6 @@
+"0","# Transformations"
+"0","countries_new <- countries %>%"
+"0","  mutate(co2=log(co2))%>%"
+"0","  mutate(elderly_pop=log(elderly_pop))%>% "
+"0","  mutate(gdp=log(gdp))%>%"
+"0","  mutate(internet=log(internet))"

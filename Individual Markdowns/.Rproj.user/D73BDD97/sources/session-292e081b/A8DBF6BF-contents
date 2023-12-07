@@ -1,0 +1,518 @@
+---
+title: "STA108 Homework Assignment 4"
+author: "Gabriel Jones"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include=F}
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(RColorBrewer)
+library(knitr)
+library(plotrix)
+library(ggpubr)
+library(MASS)
+library(lindia)
+library(leaps)
+```
+
+```{r echo=F}
+# Load Data
+survey <- read.csv("../Data/studentsurvey.csv")
+survey <- janitor::clean_names(survey)
+```
+
+
+## Chapter 6
+
+**1. For each of the potential predictors obtain a scatterplot of GPA plotted against the predictor. Do any of the scatterplots suggest a linear relationship with GPA?**
+
+```{r echo=F}
+# Exercise
+exercise_scatter <- survey%>%
+  ggplot(aes(y=gpa, x=exercise))+
+  geom_point(color="cyan4")+
+  labs(title="GPA ~ Exercise",
+       x="Exercise",
+       y="GPA")
+
+# TV
+tv_scatter <- survey%>%
+  ggplot(aes(y=gpa, x=tv))+
+  geom_point(color="brown3")+
+  labs(title="GPA ~ TV",
+       x="TV",
+       y="GPA")
+
+# Siblings
+sibilings_scatter <- survey%>%
+  ggplot(aes(y=gpa, x=siblings))+
+  geom_point(color="deeppink2")+
+  labs(title="GPA ~ Siblings",
+       x="Siblings",
+       y="GPA")
+
+# Verbal SAT
+verbal_scatter <- survey%>%
+  ggplot(aes(y=gpa, x=verbal_sat))+
+  geom_point(color="forestgreen")+
+  labs(title="GPA ~ Verbal SAT",
+       x="Verbal SAT Score",
+       y="GPA")
+
+# Math SAT
+math_scatter <- survey%>%
+  ggplot(aes(y=gpa, x=math_sat))+
+  geom_point(color="aquamarine3")+
+  labs(title="GPA ~ Math SAT",
+       x="Math SAT Score",
+       y="GPA")
+
+# SAT
+sat_scatter <- survey%>%
+  ggplot(aes(y=gpa, x=sat))+
+  geom_point(color="burlywood2")+
+  labs(title="GPA ~ SAT",
+       x="SAT Score",
+       y="GPA")
+
+# Piercings
+piercings_scatter <- survey%>%
+  ggplot(aes(y=gpa, x=piercings))+
+  geom_point(color="darkred")+
+  labs(title="GPA ~ Piercings",
+       x="Piercings",
+       y="GPA")
+
+ggarrange(exercise_scatter, tv_scatter)
+ggarrange(sibilings_scatter, piercings_scatter)
+ggarrange(verbal_scatter, math_scatter)
+sat_scatter
+```
+
+From the scatterplots produced above, it appears that Exercise and TV may negatively correlate with student's GPA. There appears to be very wide GPA ranges towards lower values however. Additionally, all data relating to SAT scores appear to have a postitive relationship with a student's GPA. 
+
+**2. Obtain the Anova table for the regression of GPA on the list of predictors above. Omit mathSAT and verbalSAT. State the null hypothesis being tested by the F-statistics in the context of this problem. Do not use generic terms such as $H_0 : \beta_1 = 0$. Use terminology such as $H_0 : B_{SAT} = 0$. Be very clear what the hypothesis tests. State your conclusion for the model.**
+
+```{r echo=F}
+# Exercise 
+
+exercise_lm <- lm(gpa ~ exercise, data=survey)
+exercise_lm_summary <- summary(exercise_lm)
+exercise_aov <- aov(gpa ~ exercise, data=survey)
+exercise_aov_summary <- summary(exercise_aov)
+
+kable(cbind(exercise_aov_summary[[1]], data.frame("Result"=c(ifelse(
+                   exercise_aov_summary[[1]]$`Pr(>F)`[1] < 0.05, 
+                   "Reject H0", "Fail to Reject H0")))), caption="ANOVA Summary: GPA ~ exercise")
+
+# TV
+
+tv_lm <- lm(gpa ~ tv, data=survey)
+tv_lm_summary <- summary(tv_lm)
+tv_aov <- aov(gpa ~ tv, data=survey)
+tv_aov_summary <- summary(tv_aov)
+
+kable(cbind(tv_aov_summary[[1]], data.frame("Result"=c(ifelse(
+                   tv_aov_summary[[1]]$`Pr(>F)`[1] < 0.05, 
+                   "Reject H0", "Fail to Reject H0")))), caption="ANOVA Summary: GPA ~ tv")
+
+# Siblings
+
+siblings_lm <- lm(gpa ~ siblings, data=survey)
+siblings_lm_summary <- summary(siblings_lm)
+siblings_aov <- aov(gpa ~ siblings, data=survey)
+siblings_aov_summary <- summary(siblings_aov)
+
+kable(cbind(siblings_aov_summary[[1]], data.frame("Result"=c(ifelse(
+                   siblings_aov_summary[[1]]$`Pr(>F)`[1] < 0.05, 
+                   "Reject H0", "Fail to Reject H0")))), caption="ANOVA Summary: GPA ~ siblings")
+
+# Piercings 
+
+piercings_lm <- lm(gpa ~ piercings, data=survey)
+piercings_lm_summary <- summary(piercings_lm)
+piercings_aov <- aov(gpa ~ piercings, data=survey)
+piercings_aov_summary <- summary(piercings_aov)
+
+kable(cbind(piercings_aov_summary[[1]], data.frame("Result"=c(ifelse(
+                   piercings_aov_summary[[1]]$`Pr(>F)`[1] < 0.05, 
+                   "Reject H0", "Fail to Reject H0")))), caption="ANOVA Summary: GPA ~ piercings")
+
+# SAT
+
+sat_lm <- lm(gpa ~ sat, data=survey)
+sat_lm_summary <- summary(sat_lm)
+sat_aov <- aov(gpa ~ sat, data=survey)
+sat_aov_summary <- summary(sat_aov)
+
+kable(cbind(sat_aov_summary[[1]], data.frame("Result"=c(ifelse(
+                   sat_aov_summary[[1]]$`Pr(>F)`[1] < 0.05, 
+                   "Reject H0", "Fail to Reject H0")))), caption="ANOVA Summary: GPA ~ sat")
+
+# Verbal SAT 
+
+verbal_sat_lm <- lm(gpa ~ verbal_sat, data=survey)
+verbal_sat_lm_summary <- summary(verbal_sat_lm)
+verbal_sat_aov <- aov(gpa ~ verbal_sat, data=survey)
+verbal_sat_aov_summary <- summary(verbal_sat_aov)
+
+# Math SAT 
+
+math_sat_lm <- lm(gpa ~ math_sat, data=survey)
+math_sat_lm_summary <- summary(math_sat_lm)
+math_sat_aov <- aov(gpa ~ math_sat, data=survey)
+math_sat_aov_summary <- summary(math_sat_aov)
+```
+
+<div align="center">
+$H_0$ | Result
+------------- | -------------
+$\beta_{Exercise} = 0$ | Reject $H_0$
+$\beta_{TV} = 0$ | Reject $H_0$
+$\beta_{Siblings} = 0$ | Fail to Reject $H_0$
+$\beta_{Piercings} = 0$ | Fail to Reject $H_0$
+$\beta_{SAT} = 0$ | Reject $H_0$
+</div>
+
+From the results of this test, we can conclude that a stuent's GPA has a relationship with Exercise, TV, and SAT Score.
+
+**3. Obtain the t-tests for each of the variables in the model. Explain, in your own words and in context, what hypothesis is being tested. State your conclusions in context and identify variables that are significant and those that are not on the basis of the p-value.**
+
+```{r}
+OutKable <- data.frame()
+
+# Exercise
+OutKable <- rbind(OutKable, data.frame("Variable"=c("Exercise"),
+                 "T_Stat"=c(coefficients(exercise_lm_summary)[2, 3]),
+                "Std.Error"=c(coefficients(exercise_lm_summary)[2, 2]),
+                 "P_Value"=c(coefficients(exercise_lm_summary)[2, 4]),
+                 "Result"=c(ifelse(
+                   coefficients(exercise_lm_summary)[2, 4] < 0.05, 
+                   "Reject H0", "Fail to Reject H0"))
+                 ))
+
+# Siblings
+OutKable <- rbind(OutKable, data.frame("Variable"=c("Siblings"),
+  "T_Stat"=c(coefficients(siblings_lm_summary)[2, 3]),
+  "Std.Error"=c(coefficients(siblings_lm_summary)[2, 2]),
+                 "P_Value"=c(coefficients(siblings_lm_summary)[2, 4]),
+                 "Result"=c(ifelse(
+                   coefficients(siblings_lm_summary)[2, 4] < 0.05, 
+                   "Reject H0", "Fail to Reject H0"))
+                 ))
+
+# Piercings
+OutKable <- rbind(OutKable, data.frame("Variable"=c("Piercings"),
+  "T_Stat"=c(coefficients(piercings_lm_summary)[2, 3]),
+  "Std.Error"=c(coefficients(piercings_lm_summary)[2, 2]),
+                 "P_Value"=c(coefficients(piercings_lm_summary)[2, 4]),
+                 "Result"=c(ifelse(
+                   coefficients(piercings_lm_summary)[2, 4] < 0.05, 
+                   "Reject H0", "Fail to Reject H0"))
+                 ))
+
+# TV
+OutKable <- rbind(OutKable, data.frame("Variable"=c("TV"),
+  "T_Stat"=c(coefficients(tv_lm_summary)[2, 3]),
+  "Std.Error"=c(coefficients(tv_lm_summary)[2, 2]),
+                 "P_Value"=c(coefficients(tv_lm_summary)[2, 4]),
+                 "Result"=c(ifelse(
+                   coefficients(tv_lm_summary)[2, 4] < 0.05, 
+                   "Reject H0", "Fail to Reject H0"))
+                 ))
+# verbal SAT
+OutKable <- rbind(OutKable, data.frame("Variable"=c("Verbal SAT"),
+  "T_Stat"=c(coefficients(verbal_sat_lm_summary)[2, 3]),
+  "Std.Error"=c(coefficients(verbal_sat_lm_summary)[2, 2]),
+                 "P_Value"=c(coefficients(verbal_sat_lm_summary)[2, 4]),
+                 "Result"=c(ifelse(
+                   coefficients(verbal_sat_lm_summary)[2, 4] < 0.05, 
+                   "Reject H0", "Fail to Reject H0"))
+                 ))
+# math SAT
+OutKable <- rbind(OutKable, data.frame("Variable"=c("Math SAT"),
+  "T_Stat"=c(coefficients(math_sat_lm_summary)[2, 3]),
+  "Std.Error"=c(coefficients(math_sat_lm_summary)[2, 2]),
+                 "P_Value"=c(coefficients(math_sat_lm_summary)[2, 4]),
+                 "Result"=c(ifelse(
+                   coefficients(math_sat_lm_summary)[2, 4] < 0.05, 
+                   "Reject H0", "Fail to Reject H0"))
+                 ))
+# SAT
+OutKable <- rbind(OutKable, data.frame("Variable"=c("SAT"),
+  "T_Stat"=c(coefficients(sat_lm_summary)[2, 3]),
+  "Std.Error"=c(coefficients(sat_lm_summary)[2, 2]),
+                 "P_Value"=c(coefficients(sat_lm_summary)[2, 4]),
+                 "Result"=c(ifelse(
+                   coefficients(sat_lm_summary)[2, 4] < 0.05, 
+                   "Reject H0", "Fail to Reject H0"))
+                 ))
+
+kable(OutKable, caption="Individual T-test for H0 : B = 0 on GPA")
+```
+
+When conducting T-tests for the variables in this model, we are attempting to determine whether there is a relationship between a student's GPA and each of our predictor variables. From the results show above, the number of siblings and piercings a student has does not appear to have an affect on the student's GPA. The number of hours a student spends on watching TV may have an affect on the student's GPA, however, it may not be an accurate predictor of GPA on it's own. The rest of the variables: hours of exercise and SAT scores, appear to have a significant affect on a student's GPA. 
+
+**4. For the variables SAT and TV, obtain the t-test from the simple linear regression. Compare the test value, standard error and error degrees of freedom to the t-tests obtained in problem 3.**
+
+```{r}
+sat.tv_lm <- lm(gpa ~ tv + sat, data=survey)
+sat.tv_lm_summary <- summary(sat.tv_lm)
+
+varis <- c("tv", "sat")
+tval <- c(coefficients(sat.tv_lm_summary)[2, 3], 
+           coefficients(sat.tv_lm_summary)[3, 3])
+std_err <- c(coefficients(sat.tv_lm_summary)[2, 2], 
+           coefficients(sat.tv_lm_summary)[3, 2])
+pval <- c(coefficients(sat.tv_lm_summary)[2, 4], 
+           coefficients(sat.tv_lm_summary)[3, 4])
+
+kable(data.frame("Variable"=varis,
+                 "T_Stat"=tval,
+                 "Standard_Error"=std_err,
+                 "P_Value"=pval))
+```
+
+Comparing the two models, we see that the t-value, standard error, and p-value for the SAT variable are similar in both models. This is not the case for the TV variable, as the two factor model resulted in a larger standard error and p-value, reducing the significance of the TV variable in it's ability to predict GPA. One way of thinking about this may be that TV is not as accurate of a predictor variable relative to the SAT variable. 
+
+**5. Calculate the average GPA for students who watch 5 hours of TV, have 2 siblings, exercise 10 hours, have 3 piercings and have an SAT score of 1200. Find the standard error and calculate a 95% confidence interval.**
+
+I was unsure what model to use considering some of the variables listed are not significant predictors for GPA, so I did the calculations using two different first order models. One used all five predictors (TV, Siblings, Exercise, Piercings, and SAT), while the other used only Exercise and SAT. They are named "Full" and "Reduced" respectively.
+
+```{r}
+# Full First Order Model
+Q5_full_lm <-lm(gpa ~ tv + siblings + exercise + piercings + sat, data=survey)
+Q5_full_lm_summary <- summary(Q5_full_lm)
+
+# Reduced First Order Model
+Q5_red_lm <- lm(gpa ~ exercise + sat, data=survey)
+Q5_red_lm_summary <- summary(Q5_red_lm)
+
+# Calculation
+Q5_calc <- data.frame("Model"=c("Full First Order", "Reduced First Order"),
+           "Average GPA"=c(
+             coefficients(Q5_full_lm_summary)[2,1]*5 + 
+               coefficients(Q5_full_lm_summary)[3,1]*2 +
+               coefficients(Q5_full_lm_summary)[4,1]*10 +
+               coefficients(Q5_full_lm_summary)[5,1]*3 +
+               coefficients(Q5_full_lm_summary)[6,1]*1200 +
+               coefficients(Q5_full_lm_summary)[1,1],
+             coefficients(Q5_red_lm_summary)[2,1]*10 + coefficients(Q5_red_lm_summary)[3,1]*1200 + coefficients(Q5_red_lm_summary)[1,1])
+           )
+kable(Q5_calc, caption="Average GPA Calculations") 
+
+# Variable Definitions
+y <- survey$gpa
+full_fit <- Q5_full_lm$fitted.values
+red_fit <- Q5_red_lm$fitted.values
+n <- length(survey$gpa)
+p_full <- length(coefficients(Q5_full_lm_summary))
+p_red <- length(coefficients(Q5_red_lm_summary))
+
+mse_full <- sum((y - full_fit)^2)/(n - p_full)
+mse_red <- sum((y - red_fit)^2)/(n - p_red)
+
+X_full <- model.matrix(Q5_full_lm)
+X_red <- model.matrix(Q5_red_lm)
+
+x_h_full <- c(1, 5, 2, 10, 3, 1200)
+x_h_red <- c(1, 10, 1200)
+
+XX_full_inv <- solve(t(X_full)%*%X_full)
+XX_red_inv <- solve(t(X_red)%*%X_red)
+# Standard Error
+
+se_full <- sqrt(mse_full*(t(x_h_full)%*%XX_full_inv%*%x_h_full))
+se_red <- sqrt(mse_red*(t(x_h_red)%*%XX_red_inv%*%x_h_red))
+
+# Confidence Intervals
+kable(data.frame("Model"=c("Full First Order", "Reduced First Order"),
+           "Lower Bound"=c(Q5_calc$Average.GPA[1] - qt(1-0.05/2,n-p_full)*se_full,
+                           Q5_calc$Average.GPA[2] - qt(1-0.05/2, n-p_red)*se_red),
+           "Upper Bound"=c(Q5_calc$Average.GPA[1] + qt(1-0.05/2, n-p_full)*se_full,
+                           Q5_calc$Average.GPA[2] + qt(1-0.05/2, n-p_red)*se_red)
+           ), caption = "Confidence Intervals")
+
+```
+
+**6. Obtain the coefficient of determination for the model with SAT and for the model where SAT is dropped and the two variable mathSAT and verbalSAT are included. Which model has a higher coefficient of determination.**
+
+```{r}
+verbal_math_lm <- lm(gpa ~ verbal_sat + math_sat, data=survey)
+verbal_math_lm_summary <- summary(verbal_math_lm)
+
+kable(data.frame(
+  "Model"=c("GPA ~ SAT", "GPA ~ verbal_sat + math_sat"),
+  "RSQ"=c(sat_lm_summary$r.squared, verbal_math_lm_summary$adj.r.squared)
+))
+```
+
+From the table above, we can see that the model using just SAT score has a higher coefficient of determination. 
+
+**7. Obtain the residual plot of the residuals plotted against the fitted values. Do you see any patterns that might indicate a violation of the regression assumptions? If yes, which ones?**
+
+It was not specified which model to use, the plot below uses the model GPA ~ SAT.
+
+```{r}
+sat_lm%>%
+  ggplot(aes(x=fitted(sat_lm), y=residuals(sat_lm)))+
+  geom_point(color="forestgreen", shape=21)+
+  geom_hline(yintercept=0)+
+  labs(title="Residuals Against Fitted Values",
+       x="Fitted Values",
+       y="Residuals")
+```
+
+From the residual plot shown above, it's worth noting that the equal variance assumption for the model GPA ~ SAT may be violated. This is because the residual variance is larger for more extreme fitted values. 
+
+**8. Obtain the normal probability plot of the residuals.**
+
+```{r}
+sat_lm%>%
+  ggplot(aes(sample=residuals(sat_lm)))+
+  geom_qq(color="brown3", size=1.3)+
+  geom_qq_line()+
+  labs(title="Residual QQ Plot",
+       x="Theoretical Quantiles",
+       y="Sample Quantiles")
+```
+
+
+## Chapter 7
+
+**1. Obtain the partial sum of squares and partial F-test for the hypothesis $H_0 : \beta_{sibling} = \beta_{TV} = 0$. Provide the test-statistic, numerator and denominator degrees of freedom and state your conclusions.**
+
+```{r}
+# Some Parameters
+n <- length(survey$gpa)
+full_df <- n - 6
+red_df <- n - 3
+
+# Fit Full Model
+full_model <- lm(gpa ~ exercise + tv + siblings + sat + piercings, data=survey)
+full_model_summary <- summary(full_model)
+
+# Fit Reduced Model
+red_model <- lm(gpa ~ siblings + tv, data=survey)
+red_model_summary <- summary(red_model)
+
+# Partial SSR
+full_ssr <- sum((fitted(full_model) - mean(survey$gpa))^2) 
+red_ssr <- sum((fitted(red_model) - mean(survey$gpa))^2) 
+PSSR <- full_ssr - red_ssr
+F_partial <- (PSSR/(red_df - full_df)) / ((sum((survey$gpa - fitted(full_model))^2))/full_df)
+
+# Perform Test and List Results
+crit <- qf(0.95, red_df - full_df, full_df)
+pval <- 1-pf(F_partial, red_df-full_df, full_df)
+
+kable(data.frame(
+  "Model"=c("Full Model", "Reduced Model", "Partial"),
+  "df"=c(full_df, red_df, red_df-full_df),
+  "SSR"=c(full_ssr, red_ssr, PSSR),
+  "F.Partial"=c(round(F_partial,4), "", ""),
+  "P.Value"=c(round(pval,4), "","")
+  ), caption = "Partial F-Test Summary")
+```
+
+Based on the results from the partial F test performed above, we reject the null hypothesis that $\beta_{sibling} = \beta_{TV} = 0$ and conclude that at least one of these two variables has a non-zero affect on a student's GPA.
+
+**2. In the model building process we can choose various techniques for identifying which of the potential predictors are useful and which ones are not. Use forward selection and backward elimination to build a model for GPA. Do you arrive at the same model? Show your steps and identify the order in which variables are entered for forward selection and for backward elimination.**
+
+```{r}
+## Forward Selection
+
+# Make the Full Linear Model
+full_model <- lm(gpa ~ exercise + tv + siblings + verbal_sat + math_sat + sat + piercings, data=survey)
+
+# Perform forward selection using LEAPS package
+forward_selection <- regsubsets(gpa ~ exercise + tv + siblings + verbal_sat + math_sat + sat + piercings, 
+                                data=survey, nbest=1, method = "forward")
+
+summary_forward_selection <- summary(forward_selection)
+
+# Find Best number of predictors
+num_pred <- which.max(summary_forward_selection$adjr2)
+
+# State which predictors to use
+forward_predictors <- as.data.frame(summary_forward_selection$which[num_pred,])
+forward_predictors <- rename(forward_predictors, "Include" = "summary_forward_selection$which[num_pred, ]")
+kable(forward_predictors, caption="Forward Selection Predictiors")
+
+# State Selection Process
+kable(as.data.frame(summary_forward_selection$outmat), caption = "Forward Selection Algorithm")
+
+## Backward Elimination
+
+# Make the Full Linear Model
+full_model <- lm(gpa ~ exercise + tv + siblings + verbal_sat + math_sat + sat + piercings, data=survey)
+
+# Perform backward elimination using LEAPS package
+backward_selection <- regsubsets(gpa ~ exercise + tv + siblings + verbal_sat + math_sat + sat + piercings, 
+                                data=survey, nbest=1, method = "backward")
+
+summary_backward_selection <- summary(backward_selection)
+
+# Find Best number of predictors
+num_pred <- which.max(summary_backward_selection$adjr2)
+
+# State which predictors to use
+backward_predictors <- as.data.frame(summary_backward_selection$which[num_pred,])
+backward_predictors <- rename(backward_predictors, "Include" = "summary_backward_selection$which[num_pred, ]")
+kable(backward_predictors, caption="Backward Selection Predictiors")
+
+# State Selection Process
+kable(as.data.frame(summary_backward_selection$outmat), caption = "Backward Elimination Algorithm")
+```
+
+The best model parameters when using forward selection and backward elimination methods for selecting variables resulted in different combinations of parameters. Forward Selection suggests to use Exercise, TV, SAT, and Piercings while Backward Elimination suggests to use Exercise, TV, Math SAT, and Verbal SAT. 
+
+The order in which variables are entered for forward selection are: SAT -> Exercise -> Piercings -> TV -> Math SAT -> Siblings.
+
+The order in which variables are entered for backward elimination are: Verbal SAT -> Math SAT -> Exercise -> Piercings -> TV -> Siblings
+
+**3. Obtain $R^2_{adj}$ for each of the models fitted in the step wise procedure. If you choose this criterion for model fitting, do you obtain the highest $R^2_{adj}$ for the model selected through backward elimination?**
+
+```{r}
+kable(data.frame(
+  "Predictor"= c("Exercise", "TV", "Verbal SAT", "Math SAT", "SAT", "Piercings"),
+  "Forward Rsq"=summary_forward_selection$rsq,
+  "Backward Rsq"=summary_backward_selection$rsq,
+  "Forward Adj Rsq"=summary_forward_selection$adjr2,
+  "Backward Adj Rsq"=summary_backward_selection$adjr2
+), caption="R squared Values")
+```
+
+Yes, you would get the highest $R^2_{adj}$ with the model using backward selection.
+
+**4. On the basis of Mallows $C_p$, which is the best model with 2, 3 or 4 predictors.**
+
+```{r}
+kable(data.frame(
+  "Predictor"= c("Exercise", "TV", "Verbal SAT", "Math SAT", "SAT", "Piercings"),
+  "Backward CP"=summary_backward_selection$cp,
+  "Forward CP"=summary_forward_selection$cp
+), caption="Mallow's CP Values")
+```
+
+- 2 Parameters: Exercise, TV (Backward) | Exercise, Piercings (Forward)
+ 
+- 3 Parameters: Exercise, TV, Verbal SAT (Backward) | Exercise, Piercings, TV (Forward)
+
+- 4 Parameters: Exercise, TV, Verbal SAT, Piercings (Backward) | Exercise, Piercings, TV, SAT (Forward)
+
+**5. Try fitting a model with only mathSAT, verbalSAT and SAT. What happens to the parameter estimates $\beta_{mathSAT}$, $\beta_{verbalSAT}$, $\beta_{SAT}$? Do you have an explanation?**
+
+```{r}
+Q5 <- lm(gpa ~ math_sat + verbal_sat + sat, data=survey)
+summary(Q5)
+```
+
+When trying to fit a model using SAT, Verbal SAT, and Math SAT, one of the variables ends up not being defined. This is because these variables have a perfect multicolliniarity between each other. 
