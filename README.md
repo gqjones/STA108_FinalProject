@@ -1,5 +1,5 @@
 # STA108_FinalProject
-### Contributors: Gabriel Jones, Ellie C.
+### Contributors: Gabriel Jones
 
 Final Project files for STA 108
 
