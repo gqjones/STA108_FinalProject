@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```{r}
 # Libraries
+
+suppressPackageStartupMessages({
 library(readr)
 library(ggplot2)
 library(dplyr)
@@ -22,12 +24,19 @@ library(MASS)
 library(lindia)
 library(leaps)
 library(car)
+})  
 ```
 
 ```{r}
 # Load Data
 countries <- read.csv("../countries.csv")
 countries <- janitor::clean_names(countries)
+
+# Select Subset
+n <- nrow(countries)
+set.seed(39) # HATSUNE MIKU
+subset_id <- sample(n, 0.8*n)
+countries <- countries[subset_id, ] 
 ```
 
 ## Single Linear Regression Models & Analysis
@@ -828,11 +837,11 @@ kable(data.frame(
 ## Forward Selection
 
 # Make Full Linear Model
-full_model <- lm(life_expectancy ~ land_area + population + rural + health + 
+full_model <- lm(life_expectancy ~ population + rural + health + 
                    internet + birth_rate + elderly_pop + co2 + gdp + cell, data=countries_new)
 
 # Perform Forward Selection
-forward_selection <- regsubsets(life_expectancy ~ land_area + population + rural + 
+forward_selection <- regsubsets(life_expectancy ~ population + rural + 
                                   health + internet + birth_rate + elderly_pop + 
                                   co2 + gdp + cell, data=countries_new, nbest=1, 
                                 method = "forward")
@@ -854,11 +863,11 @@ kable(as.data.frame(summary_forward_selection$outmat), caption = paste0("Forward
 ## Backward Elimination
 
 # Make Full Linear Model
-full_model <- lm(life_expectancy ~ land_area + population + rural + health + 
+full_model <- lm(life_expectancy ~ population + rural + health + 
                    internet + birth_rate + elderly_pop + co2 + gdp + cell, data=countries_new)
 
 # Perform Backward Selection
-backward_elimination <- regsubsets(life_expectancy ~ land_area + population + rural + 
+backward_elimination <- regsubsets(life_expectancy ~ population + rural + 
                                   health + internet + birth_rate + elderly_pop + 
                                   co2 + gdp + cell, data=countries_new, nbest=1, 
                                 method = "backward")
@@ -915,8 +924,10 @@ kable(outmat, caption = "VIF Values")
 ## Best Model
 
 ```{r}
-best_lm <- lm(life_expectancy ~ land_area + rural + health + internet + 
-                birth_rate + elderly_pop + gdp + cell, data=countries_new)
+best_lm <- lm(life_expectancy ~ rural + health + internet + 
+                birth_rate + elderly_pop, data=countries_new)
 
 best_lm_summary <- summary(best_lm)
+coefs <- cbind(best_lm_summary$coefficients, data.frame("RSq"=c(best_lm_summary$r.squared, rep(NA, num_pred))))
+kable(coefs, caption="Best Model Summary")
 ```
