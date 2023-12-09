@@ -50,7 +50,7 @@ All files related to this project can be accessed via https://github.com/gqjones
 
 ## Introduction
 
-In this project, we are interested in building a parsimonious model to estimate the life expectancy of individuals depending on various aspects of their residence country. The factors that will be considered for this estimation include: *Land Area*, *Population*, *Rural Population*, *Health Care Expenditures*, *Internet Access*, *Birth Rate*, *Elderly Population*, *CO2 Emissions*, *GDP*, and *Cell Phone Subscriptions*. The data set provided contains this information for 148 different countries. 
+In this project, we are interested in building a parsimonious model to estimate the life expectancy of individuals depending on various aspects of their residence country. The factors that will be considered for this model include: *Land Area*, *Population*, *Rural Population*, *Health Care Expenditures*, *Internet Access*, *Birth Rate*, *Elderly Population*, *CO2 Emissions*, *GDP*, and *Cell Phone Subscriptions*. The data set provided contains this information for 148 different countries. 
 
 ## Methods
 
@@ -190,6 +190,8 @@ kable(output)
 ## Summary
 
 The goal of this project was to build a parsimonious model that estimates the life expectancy of an individual based on data from the country they live in. After carrying out residual analysis, variable transformations, and variable selection algorithms, we found the best variables used in predicting life expectancy were *Rural Population*, *Health*, *Internet*, *Birth Rate*, and *Elderly Population*. Our model does an adequate job at estimating life expectancy, however, there are some improvements that can increase the effectiveness of this model. One improvement would be to use a more effective transformation of the *Elderly Population* variable to resolve the non constant error. This model could also be improved by resolving the Heteroscedasticity of the residuals in our model. 
+
+\newpage
 
 ## Appendix
 
