@@ -1,6 +1,0 @@
-"0","best_lm <- lm(life_expectancy ~ rural + health + internet + "
-"0","                birth_rate + elderly_pop, data=countries_new)"
-"0",""
-"0","best_lm_summary <- summary(best_lm)"
-"0","coefs <- cbind(best_lm_summary$coefficients, data.frame(""RSq""=c(best_lm_summary$r.squared, rep(NA, 5))))"
-"0","kable(coefs, caption=""Best Model Summary"")"

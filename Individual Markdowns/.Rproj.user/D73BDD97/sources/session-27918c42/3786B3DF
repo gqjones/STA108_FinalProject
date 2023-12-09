@@ -1,0 +1,27 @@
+{
+    "id": "3786B3DF",
+    "path": "C:/GitHub Repositories/STA108_FinalProject/STA108_TermProject_Sumbission.Rmd",
+    "project_path": null,
+    "type": "r_markdown",
+    "hash": "3419419866",
+    "contents": "",
+    "dirty": false,
+    "created": 1701990401932.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "215,0",
+        "scrollLine": "194",
+        "last_setup_crc32": "27918c42c4e2d899"
+    },
+    "folds": "0|3|5|0|\n7|27|9|0|\n11|6|27|0|\n29|6|46|0|\n60|36|85|0|\n89|36|110|0|\n114|6|146|0|\n172|6|187|0|\n195|6|211|0|\n213|6|223|0|\n225|45|968|0|\n229|6|237|0|\n241|6|310|0|\n314|6|383|0|\n387|6|456|0|\n460|6|529|0|\n533|6|602|0|\n606|6|675|0|\n679|6|748|0|\n752|6|821|0|\n825|6|894|0|\n898|6|967|0|\n969|18|979|0|\n971|6|978|0|\n980|13|1294|0|\n984|6|1053|0|\n1057|6|1126|0|\n1130|6|1199|0|\n1203|6|1272|0|\n1276|6|1293|0|\n1295|21|1349|0|\n1297|6|1348|0|\n1350|27|1385|0|\n1352|6|1383|0|\n1386|13|1405|3|\n1388|6|1395|0|\n1397|6|1405|0|\n",
+    "lastKnownWriteTime": 1702085825,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1702085825974,
+    "read_only": false,
+    "read_only_alternatives": []
+}

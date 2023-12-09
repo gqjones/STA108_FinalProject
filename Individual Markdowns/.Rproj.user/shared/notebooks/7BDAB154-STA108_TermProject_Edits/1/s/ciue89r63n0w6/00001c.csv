@@ -1,3 +1,0 @@
-"0",""
-"0","# State Selection Process"
-"0","kable(as.data.frame(summary_forward_selection$outmat), caption = paste0(""Forward Selection Algorithm | nbest="", num_pred))"
